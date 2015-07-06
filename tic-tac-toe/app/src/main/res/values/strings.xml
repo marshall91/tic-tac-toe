@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">tic-tac-toe</string>
-
-    <string name="hello_world">Hello world!</string>
+    <string name="x_win">X wins!</string>
+    <string name="o_win">O wins!</string>
+    <string name="tie_game">Tie game!</string>
     <string name="action_settings">Settings</string>
 </resources>

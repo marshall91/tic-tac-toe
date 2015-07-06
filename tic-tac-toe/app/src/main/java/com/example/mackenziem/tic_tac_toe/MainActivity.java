@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -16,8 +17,16 @@ public class MainActivity extends ActionBarActivity {
     private static final String LOGTAG = "MAIN";
 
     private Button[][] tiles;
+    private TextView tiesDisplay;
+    private TextView oWinsDisplay;
+    private TextView xWinsDisplay;
 
     private String turnSymbol;
+
+    private int xWins;
+    private int oWins;
+    private int ties;
+    private int movesPlayed;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,36 +57,51 @@ public class MainActivity extends ActionBarActivity {
             }
         }
 
+        tiesDisplay = (TextView) findViewById(R.id.ties);
+        xWinsDisplay = (TextView) findViewById(R.id.xWins);
+        oWinsDisplay = (TextView) findViewById(R.id.oWins);
 
-        Button reset = (Button) findViewById(R.id.reset);
-
-        turnSymbol = "X";
-
-        reset.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                resetButtons();
-                turnSymbol = "X";
-            }
-        });
+        turnSymbol = "O";
+        xWins = 0;
+        oWins = 0;
+        ties = 0;
+        movesPlayed = 0;
 
         Log.d(LOGTAG, "onCreate");
     }
 
     private void updateButtonState(Button b) {
         if (b.getText().equals("")) {
+            movesPlayed++;
             b.setText(turnSymbol);
             if (checkForWin()) {
-                Context context = getApplicationContext();
-                CharSequence text = turnSymbol + " wins!";
-                int duration = Toast.LENGTH_SHORT;
+                if (turnSymbol.equals("X")) {
+                    showToast(R.string.x_win);
+                    xWins++;
+                    xWinsDisplay.setText(Integer.toString(xWins));
+                } else {
+                    showToast(R.string.o_win);
+                    oWins++;
+                    oWinsDisplay.setText(Integer.toString(oWins));
+                }
+                resetGame();
+            } else if (movesPlayed == 9) {
+                ties++;
+                tiesDisplay.setText(Integer.toString(ties));
+                showToast(R.string.tie_game);
 
-                Toast toast = Toast.makeText(context, text, duration);
-                toast.show();
+                resetGame();
             } else {
                 toggleTurnSymbol();
             }
         }
+    }
+
+    private void showToast(int msgId) {
+        Context context = getApplicationContext();
+        int duration = Toast.LENGTH_SHORT;
+        Toast toast = Toast.makeText(context, msgId, duration);
+        toast.show();
     }
 
     private void toggleTurnSymbol() {
@@ -137,13 +161,15 @@ public class MainActivity extends ActionBarActivity {
         return false;
     }
 
-    private void resetButtons() {
+    private void resetGame() {
         int[] range = {0,1,2};
         for (int i : range) {
             for (Button b : tiles[i]) {
                 b.setText("");
             }
         }
+        turnSymbol = "O";
+        movesPlayed = 0;
     }
 
     @Override
