@@ -29,7 +29,7 @@ public class SplashFragment extends Fragment {
             public void onClick(View v) {
                 MenuActivity activity = new MenuActivity();
                 Intent intent = new Intent(getActivity(), activity.getClass());
-                (getActivity()).startActivity(intent);
+                getActivity().startActivity(intent);
             }
         });
 
