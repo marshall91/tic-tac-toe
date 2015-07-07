@@ -3,5 +3,5 @@
     <string name="x_win">X wins!</string>
     <string name="o_win">O wins!</string>
     <string name="tie_game">Tie game!</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_create_game">Create Game</string>
 </resources>
