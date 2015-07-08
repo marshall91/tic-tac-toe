@@ -53,12 +53,7 @@ public class MenuFragment extends Fragment {
         final View rootView = inflater.inflate(R.layout.fragment_menu, container, false);
 
         List<String> games = new ArrayList<String>();
-        mGameAdapter = new ArrayAdapter<String>(
-                getActivity(),
-                R.layout.list_item_game,
-                R.id.list_item_game_textview,
-                games
-        );
+        mGameAdapter = new CustomAdapter(getActivity(), R.layout.list_item_game, games);
 
         ListView listView = (ListView) rootView.findViewById(R.id.listview_game);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
